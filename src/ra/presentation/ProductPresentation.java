@@ -1,10 +1,15 @@
 package ra.presentation;
 
+import ra.bussiness.IBussiness;
+import ra.bussiness.ProductBussiness;
 import ra.bussiness.userBussiness;
+import ra.entity.Product;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class ProductPresentation {
+    private static IBussiness productBussiness = new ProductBussiness();
     public static void productMenu(Scanner scanner) {
         boolean isExit = true;
         do {
@@ -22,8 +27,18 @@ public class ProductPresentation {
 
                 switch (choice) {
                     case 1:
+                        List<Product> listProduct = productBussiness.getAll();
+                        listProduct.stream().forEach(System.out::println);
                         break;
                     case 2:
+                        Product product = new Product();
+                        product.inputData(scanner, productBussiness);
+                        boolean resultCreate = productBussiness.create(product);
+                        if (resultCreate) {
+                            System.out.println("thêm mới thành công!");
+                        }else {
+                            System.err.println("thêm mới thất bại!");
+                        }
                         break;
                     case 3:
                         break;
