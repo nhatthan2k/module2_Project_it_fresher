@@ -2,7 +2,6 @@ package ra.entity;
 
 import ra.bussiness.IBussiness;
 
-import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -92,7 +91,7 @@ public class Product {
         this.status = inputProductStatus(scanner);
     }
 
-    public static String inputProductId(Scanner scanner, IBussiness productBussiness) {
+    public String inputProductId(Scanner scanner, IBussiness productBussiness) {
         do {
             System.out.println("Mã sản phẩm(có 5 kí tự):");
             String productId = scanner.nextLine();
@@ -109,7 +108,7 @@ public class Product {
         } while (true);
     }
 
-    public static String inputProductName(Scanner scanner, IBussiness productBussiness) {
+    public String inputProductName(Scanner scanner, IBussiness productBussiness) {
         do {
             System.out.println("Tên Sản phẩm:");
             String productName = scanner.nextLine();
@@ -126,7 +125,7 @@ public class Product {
         } while (true);
     }
 
-    public static String inputManufacturer(Scanner scanner) {
+    public String inputManufacturer(Scanner scanner) {
         do {
             System.out.println("Tên nhà sản xuất:");
             String manufacturer = scanner.nextLine();
@@ -139,7 +138,7 @@ public class Product {
         } while (true);
     }
 
-    public static int inputBatch(Scanner scanner) {
+    public int inputBatch(Scanner scanner) {
         do {
             System.out.println("Lô chứa sản phẩm:");
             try {
@@ -152,11 +151,13 @@ public class Product {
                 }
             } catch (NumberFormatException e) {
                 System.err.println("vui lòng nhập số nguyên!");
+            } catch (Exception ex) {
+                System.err.println(ex.getMessage());
             }
         } while (true);
     }
 
-    public static boolean inputProductStatus(Scanner scanner) {
+    public boolean inputProductStatus(Scanner scanner) {
         do {
             System.out.println("Trạng thái của sản phẩm:");
             String productStatus = scanner.nextLine();

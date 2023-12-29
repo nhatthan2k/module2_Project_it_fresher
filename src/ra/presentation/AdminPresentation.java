@@ -27,6 +27,7 @@ public class AdminPresentation {
                         ProductPresentation.productMenu(scanner);
                         break;
                     case 2:
+                        EmployeePresentation.employeeMenu(scanner);
                         break;
                     case 3:
                         break;

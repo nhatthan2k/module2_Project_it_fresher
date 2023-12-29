@@ -2,7 +2,6 @@ package ra.presentation;
 
 import ra.bussiness.IBussiness;
 import ra.bussiness.ProductBussiness;
-import ra.bussiness.userBussiness;
 import ra.entity.Product;
 
 import java.util.List;
@@ -46,7 +45,7 @@ public class ProductPresentation {
                         isExit = false;
                         break;
                     default:
-                        System.out.println("vui lòng chọn từ 1 - 8!");
+                        System.out.println("vui lòng chọn từ 1 - 6!");
                 }
             } catch (NumberFormatException e) {
                 System.err.println("vui lòng nhập số nguyên!");
