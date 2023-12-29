@@ -8,4 +8,5 @@ public interface IBussiness<T, K, S> {
     boolean update(T t);
     T findById(K k);
     T findByName(S s);
+    List<T> searchName(S s);
 }

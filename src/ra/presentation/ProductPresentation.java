@@ -31,20 +31,16 @@ public class ProductPresentation {
                         listProduct.stream().forEach(System.out::println);
                         break;
                     case 2:
-                        Product product = new Product();
-                        product.inputData(scanner, productBussiness);
-                        boolean resultCreate = productBussiness.create(product);
-                        if (resultCreate) {
-                            System.out.println("thêm mới thành công!");
-                        }else {
-                            System.err.println("thêm mới thất bại!");
-                        }
+                        createProduct(scanner);
                         break;
                     case 3:
+                        updateProduct(scanner);
                         break;
                     case 4:
+                        searchProduct(scanner);
                         break;
                     case 5:
+                        updateStatusProduct(scanner);
                         break;
                     case 6:
                         isExit = false;
@@ -58,5 +54,74 @@ public class ProductPresentation {
                 System.err.println(ex.getMessage());
             }
         }while (isExit);
+    }
+
+    public static void createProduct(Scanner scanner) {
+        Product product = new Product();
+        product.inputData(scanner, productBussiness);
+        boolean resultCreate = productBussiness.create(product);
+        if (resultCreate) {
+            System.out.println("thêm mới thành công!");
+        }else {
+            System.err.println("thêm mới thất bại!");
+        }
+    }
+    public static void updateProduct(Scanner scanner) {
+        System.out.println("Mã của sản phẩm bạn muốn thay đổi:");
+        String updateId = scanner.nextLine();
+
+        if (updateId.trim().length() == 5) {
+            Product product = (Product) productBussiness.findById(updateId);
+
+            if(product != null) {
+                product.updateData(scanner, productBussiness);
+                boolean result = productBussiness.update(product);
+                if (result) {
+                    System.out.println("cập nhật thành công!");
+                }else {
+                    System.err.println("cập nhật thất bại!");
+                }
+            }else {
+                System.err.println("mã sản phẩm không tồn tại!");
+            }
+        }else {
+            System.err.println("mã sản phẩm phải có 5 kí tự!");
+        }
+    }
+
+    public static void searchProduct(Scanner scanner) {
+        System.out.println("Tên sản phẩm bạn muốn tìm kiếm:");
+        String searchName = scanner.nextLine();
+
+        List<Product> listProduct = productBussiness.searchName(searchName);
+
+        if(listProduct.isEmpty()) {
+            System.err.println("không tìm thấy sản phẩm!");
+        }else {
+            listProduct.stream().forEach(System.out::println);
+        }
+    }
+
+    public static void updateStatusProduct(Scanner scanner) {
+        System.out.println("Mã sản phẩm bạn muốn thay đổi:");
+        String updateId = scanner.nextLine();
+
+        if (updateId.trim().length() == 5) {
+            Product product = (Product) productBussiness.findById(updateId);
+
+            if(product != null) {
+                product.updateDataStatus(scanner);
+                boolean result = productBussiness.update(product);
+                if (result) {
+                    System.out.println("cập nhật thành công!");
+                }else {
+                    System.err.println("cập nhật thất bại!");
+                }
+            }else {
+                System.err.println("mã sản phẩm không tồn tại!");
+            }
+        }else {
+            System.err.println("mã sản phẩm phải có 5 kí tự!");
+        }
     }
 }
