@@ -199,6 +199,11 @@ public class Employee {
         } while (true);
     }
 
+    public void displayData() {
+        System.out.printf("employeeId: %s, employeeName: %s, birthOfDate: %s, email: %s, phone: %s, address: %s, " +
+                "employeeStatus: %s\n", this.employeeId, this.employeeName, this.birthOfDate, this.email, this.phone, this.address, this.employeeStatus);
+    }
+
     @Override
     public String toString() {
         return "Employee{" +

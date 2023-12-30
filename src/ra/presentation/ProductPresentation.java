@@ -137,10 +137,10 @@ public class ProductPresentation {
                 System.err.println("không tìm thấy sản phẩm!");
                 isExit = false;
             } else {
+                listProduct.stream().forEach(System.out::println);
                 if(listProduct.size() < 10) {
                     isExit = false;
                 }else {
-                    listProduct.stream().forEach(System.out::println);
                     System.out.println("nhấn phím 1 để xem thêm, phím 2 để thoát");
                     try {
                         int choice = Integer.parseInt(scanner.nextLine());

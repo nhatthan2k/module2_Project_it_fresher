@@ -1,6 +1,9 @@
 package ra.entity;
 
+import ra.bussiness.IBussiness;
+
 import java.io.Serializable;
+import java.util.Scanner;
 
 public class Account implements Serializable {
     private int accId;
@@ -68,5 +71,9 @@ public class Account implements Serializable {
 
     public void setAccStatus(boolean accStatus) {
         this.accStatus = accStatus;
+    }
+
+    public void inputData(Scanner scanner, IBussiness accountBussiness) {
+
     }
 }
