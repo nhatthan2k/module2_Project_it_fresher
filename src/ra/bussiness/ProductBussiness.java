@@ -10,16 +10,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductBussiness implements IBussiness<Product, String, String>{
+public class ProductBussiness implements IBussiness<Product, String, String, Integer>{
 
     @Override
-    public List<Product> getAll() {
+    public List<Product> getAll(Integer integer) {
         Connection conn = ConnectionDB.openConnection();
         CallableStatement callSt = null;
         List<Product> listProduct = null;
 
         try {
-            callSt = conn.prepareCall("call get_all_product()");
+            callSt = conn.prepareCall("call get_all_product(?)");
+            callSt.setInt(1, integer);
             ResultSet rs = callSt.executeQuery();
             listProduct = new ArrayList<>();
 
@@ -165,13 +166,14 @@ public class ProductBussiness implements IBussiness<Product, String, String>{
     }
 
     @Override
-    public List<Product> searchName(String s) {
+    public List<Product> searchName(String s, Integer integer) {
         Connection conn = ConnectionDB.openConnection();
         CallableStatement callSt = null;
         List<Product> listproduct = null;
         try {
-            callSt = conn.prepareCall("{call search_product_name(?)}");
+            callSt = conn.prepareCall("{call search_product_name(?,?)}");
             callSt.setString(1, s);
+            callSt.setInt(2, integer);
             ResultSet rs = callSt.executeQuery();
             listproduct = new ArrayList<>();
 

@@ -3,6 +3,7 @@ package ra.presentation;
 import ra.bussiness.EmployeeBussiness;
 import ra.bussiness.IBussiness;
 import ra.entity.Employee;
+import ra.entity.Product;
 
 import java.util.List;
 import java.util.Scanner;
@@ -27,8 +28,7 @@ public class EmployeePresentation {
 
                 switch (choice) {
                     case 1:
-                        List<Employee> listEmployee = employeeBussiness.getAll();
-                        listEmployee.stream().forEach(System.out::println);
+                        displayEmployee(scanner);
                         break;
                     case 2:
                         createEmployee(scanner);
@@ -56,6 +56,34 @@ public class EmployeePresentation {
         }while (isExit);
     }
 
+    public static void displayEmployee(Scanner scanner) {
+        int numPager = 1;
+        boolean isExit = true;
+        do{
+            List<Employee> listEmployee = employeeBussiness.getAll(numPager);
+            listEmployee.stream().forEach(System.out::println);
+
+            System.out.println("nhấn phím 1 để xem thêm, phím 2 để thoát");
+            try {
+                int choice = Integer.parseInt(scanner.nextLine());
+
+                switch (choice) {
+                    case 1:
+                        numPager ++;
+                        break;
+                    case 2:
+                        isExit = false;
+                        break;
+                    default:
+                        System.out.println("vui lòng chọn 1 trong 2 lưa chọn trên!");
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("vui lòng nhập số nguyên!");
+            } catch (Exception ex) {
+                System.err.println(ex.getMessage());
+            }
+        }while (isExit);
+    }
     public static void createEmployee(Scanner scanner) {
         Employee employee = new Employee();
         employee.inputData(scanner, employeeBussiness);
@@ -92,14 +120,38 @@ public class EmployeePresentation {
     public static void searchEmployee(Scanner scanner) {
         System.out.println("Tên nhân viên bạn muốn tìm kiếm:");
         String searchName = scanner.nextLine();
+        int numPager = 1;
+        boolean isExit = true;
 
-        List<Employee> listEmployee = employeeBussiness.searchName(searchName);
+        do {
+            List<Employee> listEmployee = employeeBussiness.searchName(searchName,numPager);
 
-        if(listEmployee.isEmpty()) {
-            System.err.println("không tìm thấy nhân viên!");
-        }else {
-            listEmployee.stream().forEach(System.out::println);
-        }
+            if(listEmployee.isEmpty() && numPager == 1) {
+                System.err.println("không tìm thấy nhân viên!");
+                isExit = false;
+            }else {
+                listEmployee.stream().forEach(System.out::println);
+                System.out.println("nhấn phím 1 để xem thêm, phím 2 để thoát");
+                try {
+                    int choice = Integer.parseInt(scanner.nextLine());
+
+                    switch (choice) {
+                        case 1:
+                            numPager ++;
+                            break;
+                        case 2:
+                            isExit = false;
+                            break;
+                        default:
+                            System.out.println("vui lòng chọn 1 trong 2 lưa chọn trên!");
+                    }
+                } catch (NumberFormatException e) {
+                    System.err.println("vui lòng nhập số nguyên!");
+                } catch (Exception ex) {
+                    System.err.println(ex.getMessage());
+                }
+            }
+        }while (isExit);
     }
 
     public static void updateStatusEmployee(Scanner scanner) {

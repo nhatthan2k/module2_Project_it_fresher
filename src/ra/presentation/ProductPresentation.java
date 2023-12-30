@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 public class ProductPresentation {
     private static IBussiness productBussiness = new ProductBussiness();
+
     public static void productMenu(Scanner scanner) {
         boolean isExit = true;
         do {
@@ -26,8 +27,7 @@ public class ProductPresentation {
 
                 switch (choice) {
                     case 1:
-                        List<Product> listProduct = productBussiness.getAll();
-                        listProduct.stream().forEach(System.out::println);
+                        displayProduct(scanner);
                         break;
                     case 2:
                         createProduct(scanner);
@@ -52,7 +52,42 @@ public class ProductPresentation {
             } catch (Exception ex) {
                 System.err.println(ex.getMessage());
             }
-        }while (isExit);
+        } while (isExit);
+    }
+
+    public static void displayProduct(Scanner scanner) {
+        int numPager = 1;
+        boolean isExit = true;
+
+        do {
+            List<Product> listProduct = productBussiness.getAll(numPager);
+            listProduct.stream().forEach(System.out::println);
+
+            if(listProduct.size()<10) {
+                isExit = false;
+            }else {
+                System.out.println("nhấn phím 1 để xem thêm, phím 2 để thoát");
+                try {
+                    int choice = Integer.parseInt(scanner.nextLine());
+
+                    switch (choice) {
+                        case 1:
+                            numPager++;
+                            break;
+                        case 2:
+                            isExit = false;
+                            break;
+                        default:
+                            System.out.println("vui lòng chọn 1 trong 2 lưa chọn trên!");
+                    }
+                } catch (NumberFormatException e) {
+                    System.err.println("vui lòng nhập số nguyên!");
+                } catch (Exception ex) {
+                    System.err.println(ex.getMessage());
+                }
+            }
+        } while (isExit);
+
     }
 
     public static void createProduct(Scanner scanner) {
@@ -61,10 +96,11 @@ public class ProductPresentation {
         boolean resultCreate = productBussiness.create(product);
         if (resultCreate) {
             System.out.println("thêm mới thành công!");
-        }else {
+        } else {
             System.err.println("thêm mới thất bại!");
         }
     }
+
     public static void updateProduct(Scanner scanner) {
         System.out.println("Mã của sản phẩm bạn muốn thay đổi:");
         String updateId = scanner.nextLine();
@@ -72,18 +108,18 @@ public class ProductPresentation {
         if (updateId.trim().length() == 5) {
             Product product = (Product) productBussiness.findById(updateId);
 
-            if(product != null) {
+            if (product != null) {
                 product.updateData(scanner, productBussiness);
                 boolean result = productBussiness.update(product);
                 if (result) {
                     System.out.println("cập nhật thành công!");
-                }else {
+                } else {
                     System.err.println("cập nhật thất bại!");
                 }
-            }else {
+            } else {
                 System.err.println("mã sản phẩm không tồn tại!");
             }
-        }else {
+        } else {
             System.err.println("mã sản phẩm phải có 5 kí tự!");
         }
     }
@@ -91,14 +127,42 @@ public class ProductPresentation {
     public static void searchProduct(Scanner scanner) {
         System.out.println("Tên sản phẩm bạn muốn tìm kiếm:");
         String searchName = scanner.nextLine();
+        int numPager = 1;
+        boolean isExit = true;
 
-        List<Product> listProduct = productBussiness.searchName(searchName);
+        do {
+            List<Product> listProduct = productBussiness.searchName(searchName, numPager);
 
-        if(listProduct.isEmpty()) {
-            System.err.println("không tìm thấy sản phẩm!");
-        }else {
-            listProduct.stream().forEach(System.out::println);
-        }
+            if (listProduct.isEmpty() && numPager == 1) {
+                System.err.println("không tìm thấy sản phẩm!");
+                isExit = false;
+            } else {
+                if(listProduct.size() < 10) {
+                    isExit = false;
+                }else {
+                    listProduct.stream().forEach(System.out::println);
+                    System.out.println("nhấn phím 1 để xem thêm, phím 2 để thoát");
+                    try {
+                        int choice = Integer.parseInt(scanner.nextLine());
+
+                        switch (choice) {
+                            case 1:
+                                numPager++;
+                                break;
+                            case 2:
+                                isExit = false;
+                                break;
+                            default:
+                                System.out.println("vui lòng chọn 1 trong 2 lưa chọn trên!");
+                        }
+                    } catch (NumberFormatException e) {
+                        System.err.println("vui lòng nhập số nguyên!");
+                    } catch (Exception ex) {
+                        System.err.println(ex.getMessage());
+                    }
+                }
+            }
+        } while (isExit);
     }
 
     public static void updateStatusProduct(Scanner scanner) {
@@ -108,18 +172,18 @@ public class ProductPresentation {
         if (updateId.trim().length() == 5) {
             Product product = (Product) productBussiness.findById(updateId);
 
-            if(product != null) {
+            if (product != null) {
                 product.updateDataStatus(scanner);
                 boolean result = productBussiness.update(product);
                 if (result) {
                     System.out.println("cập nhật thành công!");
-                }else {
+                } else {
                     System.err.println("cập nhật thất bại!");
                 }
-            }else {
+            } else {
                 System.err.println("mã sản phẩm không tồn tại!");
             }
-        }else {
+        } else {
             System.err.println("mã sản phẩm phải có 5 kí tự!");
         }
     }

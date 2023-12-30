@@ -7,15 +7,16 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeeBussiness implements IBussiness<Employee, String, String> {
+public class EmployeeBussiness implements IBussiness<Employee, String, String, Integer> {
     @Override
-    public List<Employee> getAll() {
+    public List<Employee> getAll(Integer integer) {
         Connection conn = ConnectionDB.openConnection();
         CallableStatement callSt = null;
         List<Employee> listEmployee = null;
 
         try {
-            callSt = conn.prepareCall("call get_all_employee()");
+            callSt = conn.prepareCall("call get_all_employee(?)");
+            callSt.setInt(1, integer);
             ResultSet rs = callSt.executeQuery();
             listEmployee = new ArrayList<>();
 
@@ -165,13 +166,14 @@ public class EmployeeBussiness implements IBussiness<Employee, String, String> {
     }
 
     @Override
-    public List<Employee> searchName(String s) {
+    public List<Employee> searchName(String s, Integer integer) {
         Connection conn = ConnectionDB.openConnection();
         CallableStatement callSt = null;
         List<Employee> listEmployee = null;
         try {
-            callSt = conn.prepareCall("{call search_employee_name(?)}");
+            callSt = conn.prepareCall("{call search_employee_name(?,?)}");
             callSt.setString(1, s);
+            callSt.setInt(2, integer);
             ResultSet rs = callSt.executeQuery();
             listEmployee = new ArrayList<>();
 

@@ -54,7 +54,7 @@ public class userBussiness {
         } catch (Exception ex) {
             account = new Account();
         } finally {
-            if(fis != null) {
+            if (fis != null) {
                 try {
                     fis.close();
                 } catch (IOException e) {
@@ -85,7 +85,7 @@ public class userBussiness {
             oos.flush();
         } catch (Exception ex) {
             ex.printStackTrace();
-        }finally {
+        } finally {
             if (fos != null) {
                 try {
                     fos.close();

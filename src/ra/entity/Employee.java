@@ -146,12 +146,12 @@ public class Employee {
             System.out.println("email nhân viên:");
             String email = scanner.nextLine();
 
-            if(email.trim().isEmpty()) {
+            if (email.trim().isEmpty()) {
                 System.err.println("email không được để trống!");
-            }else {
+            } else {
                 return email;
             }
-        }while (true);
+        } while (true);
     }
 
     public String inputPhone(Scanner scanner) {
@@ -159,12 +159,12 @@ public class Employee {
             System.out.println("số điện thoại nhân viên:");
             String phoneNumber = scanner.nextLine();
 
-            if(phoneNumber.trim().isEmpty()) {
+            if (phoneNumber.trim().isEmpty()) {
                 System.err.println("số điên thoại không được để trống!");
-            }else {
+            } else {
                 return phoneNumber;
             }
-        }while (true);
+        } while (true);
     }
 
     public String inputAddress(Scanner scanner) {
@@ -172,12 +172,12 @@ public class Employee {
             System.out.println("địa chỉ nhân viên:");
             String phoneNumber = scanner.nextLine();
 
-            if(phoneNumber.trim().isEmpty()) {
+            if (phoneNumber.trim().isEmpty()) {
                 System.err.println("địa chỉ nhân viên không được để trống!");
-            }else {
+            } else {
                 return phoneNumber;
             }
-        }while (true);
+        } while (true);
     }
 
     public int inputStatus(Scanner scanner) {
@@ -186,9 +186,9 @@ public class Employee {
             try {
                 int employeeStatus = Integer.parseInt(scanner.nextLine());
 
-                if (employeeStatus >= 0 && employeeStatus<=2) {
+                if (employeeStatus >= 0 && employeeStatus <= 2) {
                     return employeeStatus;
-                }else {
+                } else {
                     System.err.println("trạng thái nhân viên chỉ nhận giá trị từ 0 - 2! vui lòng nhập lại");
                 }
             } catch (NumberFormatException e) {
@@ -196,7 +196,7 @@ public class Employee {
             } catch (Exception ex) {
                 System.err.println(ex.getMessage());
             }
-        }while (true);
+        } while (true);
     }
 
     @Override
