@@ -198,7 +198,7 @@ public class AccountBussiness implements IBussiness<Account, Integer, String, In
         return listAccount;
     }
 
-    public Account findAccountByEmpId(String s) {
+    public static Account findAccountByEmpId(String s) {
         Connection conn = ConnectionDB.openConnection();
         CallableStatement callSt = null;
         Account account = null;
@@ -225,5 +225,37 @@ public class AccountBussiness implements IBussiness<Account, Integer, String, In
             ConnectionDB.closeConnection(conn);
         }
         return account;
+    }
+
+    public static List<Account> searchAccountbyEmpName(String s, Integer integer) {
+        Connection conn = ConnectionDB.openConnection();
+        CallableStatement callSt = null;
+        List<Account> listAccount = null;
+
+        try {
+            callSt = conn.prepareCall("{call search_acc_by_emp_name(?,?)}");
+            callSt.setString(1, s);
+            callSt.setInt(2,integer);
+            ResultSet rs = callSt.executeQuery();
+            listAccount = new ArrayList<>();
+
+            if(rs.next()) {
+                Account account = new Account();
+                account.setAccId(rs.getInt("Acc_Id"));
+                account.setUserName(rs.getString("User_Name"));
+                account.setPassword(rs.getString("Password"));
+                account.setPermission(rs.getBoolean("Permission"));
+                account.setEmpId(rs.getString("Emp_Id"));
+                account.setAccStatus(rs.getBoolean("Acc_Status"));
+                listAccount.add(account);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            ConnectionDB.closeConnection(conn);
+        }
+        return listAccount;
     }
 }

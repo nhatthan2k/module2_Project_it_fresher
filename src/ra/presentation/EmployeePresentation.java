@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class EmployeePresentation {
 
-    private static IBussiness employeeBussiness = new EmployeeBussiness();
+    public static IBussiness employeeBussiness = new EmployeeBussiness();
 
     public static void employeeMenu(Scanner scanner) {
         boolean isExit = true;
@@ -91,7 +91,7 @@ public class EmployeePresentation {
 
     public static void createEmployee(Scanner scanner) {
         Employee employee = new Employee();
-        employee.inputData(scanner, employeeBussiness);
+        employee.inputData(scanner);
         boolean result = employeeBussiness.create(employee);
         if (result) {
             System.out.println("thêm mới thành công!");
@@ -108,7 +108,7 @@ public class EmployeePresentation {
             Employee employee = (Employee) employeeBussiness.findById(updateId);
 
             if (employee != null) {
-                employee.updateData(scanner, employeeBussiness);
+                employee.updateData(scanner);
                 boolean result = employeeBussiness.update(employee);
                 if (result) {
                     System.out.println("cập nhật thành công!");

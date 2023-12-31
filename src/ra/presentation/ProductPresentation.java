@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ProductPresentation {
-    private static IBussiness productBussiness = new ProductBussiness();
+    public static IBussiness productBussiness = new ProductBussiness();
 
     public static void productMenu(Scanner scanner) {
         boolean isExit = true;
@@ -63,9 +63,9 @@ public class ProductPresentation {
             List<Product> listProduct = productBussiness.getAll(numPager);
             listProduct.stream().forEach(System.out::println);
 
-            if(listProduct.size()<10) {
+            if (listProduct.size() < 10) {
                 isExit = false;
-            }else {
+            } else {
                 System.out.println("nhấn phím 1 để xem thêm, phím 2 để thoát");
                 try {
                     int choice = Integer.parseInt(scanner.nextLine());
@@ -92,7 +92,7 @@ public class ProductPresentation {
 
     public static void createProduct(Scanner scanner) {
         Product product = new Product();
-        product.inputData(scanner, productBussiness);
+        product.inputData(scanner);
         boolean resultCreate = productBussiness.create(product);
         if (resultCreate) {
             System.out.println("thêm mới thành công!");
@@ -109,7 +109,7 @@ public class ProductPresentation {
             Product product = (Product) productBussiness.findById(updateId);
 
             if (product != null) {
-                product.updateData(scanner, productBussiness);
+                product.updateData(scanner);
                 boolean result = productBussiness.update(product);
                 if (result) {
                     System.out.println("cập nhật thành công!");
@@ -138,9 +138,9 @@ public class ProductPresentation {
                 isExit = false;
             } else {
                 listProduct.stream().forEach(System.out::println);
-                if(listProduct.size() < 10) {
+                if (listProduct.size() < 10) {
                     isExit = false;
-                }else {
+                } else {
                     System.out.println("nhấn phím 1 để xem thêm, phím 2 để thoát");
                     try {
                         int choice = Integer.parseInt(scanner.nextLine());

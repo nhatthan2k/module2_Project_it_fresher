@@ -1,10 +1,10 @@
 package ra.entity;
 
-import ra.bussiness.IBussiness;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
+
+import static ra.presentation.EmployeePresentation.employeeBussiness;
 
 public class Employee {
     private String employeeId;
@@ -84,9 +84,9 @@ public class Employee {
         this.employeeStatus = employeeStatus;
     }
 
-    public void inputData(Scanner scanner, IBussiness employeeBussiness) {
-        this.employeeId = inputEmployeeId(scanner, employeeBussiness);
-        this.employeeName = inputEmployeeName(scanner, employeeBussiness);
+    public void inputData(Scanner scanner) {
+        this.employeeId = inputEmployeeId(scanner);
+        this.employeeName = inputEmployeeName(scanner);
         this.birthOfDate = inputBirthDay(scanner);
         this.email = inputEmail(scanner);
         this.phone = inputPhone(scanner);
@@ -94,7 +94,7 @@ public class Employee {
         this.employeeStatus = inputStatus(scanner);
     }
 
-    public String inputEmployeeId(Scanner scanner, IBussiness employeeBussiness) {
+    public String inputEmployeeId(Scanner scanner) {
         do {
             System.out.println("Mã nhân viên(có 5 kí tự):");
             String employeeId = scanner.nextLine();
@@ -111,7 +111,7 @@ public class Employee {
         } while (true);
     }
 
-    public String inputEmployeeName(Scanner scanner, IBussiness employeeBussiness) {
+    public String inputEmployeeName(Scanner scanner) {
         do {
             System.out.println("Tên nhân viên:");
             String employeeName = scanner.nextLine();
@@ -217,7 +217,7 @@ public class Employee {
                 '}';
     }
 
-    public void updateData(Scanner scanner, IBussiness employeeBussiness) {
+    public void updateData(Scanner scanner) {
         boolean isExit = true;
         do {
             System.out.println("************Câp nhât thông tin************");
@@ -234,7 +234,7 @@ public class Employee {
 
                 switch (choice) {
                     case 1:
-                        this.employeeName = inputEmployeeName(scanner, employeeBussiness);
+                        this.employeeName = inputEmployeeName(scanner);
                         break;
                     case 2:
                         this.birthOfDate = inputBirthDay(scanner);
@@ -285,6 +285,8 @@ public class Employee {
                         break;
                     case 3:
                         this.employeeStatus = 2;
+                        isExit = false;
+                        break;
                     default:
                         System.out.println("nhập lựa chọn từ 1 - 3!");
                 }

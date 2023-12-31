@@ -1,6 +1,5 @@
 package ra.presentation;
 
-import ra.bussiness.AccountBussiness;
 import ra.bussiness.userBussiness;
 
 import java.util.Scanner;

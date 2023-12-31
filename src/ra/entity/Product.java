@@ -1,9 +1,9 @@
 package ra.entity;
 
-import ra.bussiness.IBussiness;
-
 import java.util.Date;
 import java.util.Scanner;
+
+import static ra.presentation.ProductPresentation.productBussiness;
 
 public class Product {
     private String productId;
@@ -83,15 +83,15 @@ public class Product {
         this.status = status;
     }
 
-    public void inputData(Scanner scanner, IBussiness productBussiness) {
-        this.productId = inputProductId(scanner, productBussiness);
-        this.productName = inputProductName(scanner, productBussiness);
+    public void inputData(Scanner scanner) {
+        this.productId = inputProductId(scanner);
+        this.productName = inputProductName(scanner);
         this.manufacturer = inputManufacturer(scanner);
         this.batch = inputBatch(scanner);
         this.status = inputProductStatus(scanner);
     }
 
-    public String inputProductId(Scanner scanner, IBussiness productBussiness) {
+    public String inputProductId(Scanner scanner) {
         do {
             System.out.println("Mã sản phẩm(có 5 kí tự):");
             String productId = scanner.nextLine();
@@ -108,7 +108,7 @@ public class Product {
         } while (true);
     }
 
-    public String inputProductName(Scanner scanner, IBussiness productBussiness) {
+    public String inputProductName(Scanner scanner) {
         do {
             System.out.println("Tên Sản phẩm:");
             String productName = scanner.nextLine();
@@ -187,7 +187,7 @@ public class Product {
                 '}';
     }
 
-    public void updateData(Scanner scanner, IBussiness productBussiness) {
+    public void updateData(Scanner scanner) {
         boolean isExit = true;
         do {
             System.out.println("************Câp nhât thông tin************");
@@ -202,7 +202,7 @@ public class Product {
 
                 switch (choice) {
                     case 1:
-                        this.productName = inputProductName(scanner, productBussiness);
+                        this.productName = inputProductName(scanner);
                         break;
                     case 2:
                         this.manufacturer = inputManufacturer(scanner);

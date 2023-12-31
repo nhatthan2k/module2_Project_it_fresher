@@ -8,8 +8,10 @@ import ra.entity.Employee;
 import java.util.List;
 import java.util.Scanner;
 
+import static ra.presentation.EmployeePresentation.employeeBussiness;
+
 public class AccountPresentation {
-    private static IBussiness accountBussiness = new AccountBussiness();
+    public static IBussiness accountBussiness = new AccountBussiness();
     public static void accountMenu(Scanner scanner) {
         boolean isExit = true;
 
@@ -33,8 +35,10 @@ public class AccountPresentation {
                         createAccount(scanner);
                         break;
                     case 3:
+                        updateStatusAccount(scanner);
                         break;
                     case 4:
+                        searchAccount(scanner);
                         break;
                     case 5:
                         isExit = false;
@@ -85,7 +89,7 @@ public class AccountPresentation {
 
     public static void createAccount(Scanner scanner) {
         Account account = new Account();
-        account.inputData(scanner, accountBussiness);
+        account.inputData(scanner);
         boolean result = accountBussiness.create(account);
         if (result) {
             System.out.println("thêm mới thành công!");
@@ -95,15 +99,15 @@ public class AccountPresentation {
     }
 
     public static void updateStatusAccount(Scanner scanner) {
-        System.out.println("Mã của nhân viên bạn muốn thay đổi:");
-        String updateId = scanner.nextLine();
+        System.out.println("Mã tài khoản bạn muốn thay đổi:");
+        try {
+            int updateId = Integer.parseInt(scanner.nextLine());
 
-        if (updateId.trim().length() == 5) {
-            Employee employee = (Employee) employeeBussiness.findById(updateId);
+            Account account = (Account) accountBussiness.findById(updateId);
 
-            if (employee != null) {
-                employee.updateDataStatus(scanner);
-                boolean result = employeeBussiness.update(employee);
+            if (account != null) {
+                account.updateDataStatus(scanner);
+                boolean result = accountBussiness.update(account);
                 if (result) {
                     System.out.println("cập nhật thành công!");
                 } else {
@@ -112,16 +116,18 @@ public class AccountPresentation {
             } else {
                 System.err.println("mã nhân viên không tồn tại!");
             }
-        } else {
-            System.err.println("mã nhân viên phải có 5 kí tự!");
+        } catch (NumberFormatException e) {
+            System.err.println("vui lòng nhập số nguyên!");
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
         }
     }
-    public static void searchEmployee(Scanner scanner) {
+    public static void searchAccount(Scanner scanner) {
         boolean isExit = true;
         do {
             System.out.println("************Phương thức tìm kiếm nhân viên************");
-            System.out.println("1. Tìm kiếm nhân viên theo tên");
-            System.out.println("2. Tìm kiếm nhân viên theo mã");
+            System.out.println("1. Tìm kiếm nhân viên theo userName");
+            System.out.println("2. Tìm kiếm nhân viên theo tên nhân viên");
             System.out.println("3. thoát");
             System.out.println("lựa chon của bạn:");
 
@@ -130,22 +136,10 @@ public class AccountPresentation {
 
                 switch (choice) {
                     case 1:
-                        searchEmployeeByName(scanner);
+                        searchAccountByUserName(scanner);
                         break;
                     case 2:
-                        System.out.println("Mã nhân viên(có 5 kí tự) bạn muốn tìm kiếm:");
-                        String employeeId = scanner.nextLine();
-
-                        if (employeeId.trim().length() == 5) {
-                            if (employeeBussiness.findById(employeeId) == null) {
-                                System.err.println("mã nhân viên không tồn tại!");
-                            } else {
-                                Employee employee = (Employee) employeeBussiness.findById(employeeId);
-                                employee.displayData();
-                            }
-                        } else {
-                            System.err.println("Mã nhân viên có 5 kí tự! vui lòng nhập lại");
-                        }
+                       searchAccountByEmployeeName(scanner);
                         break;
                     case 3:
                         isExit = false;
@@ -161,21 +155,63 @@ public class AccountPresentation {
         } while (isExit);
     }
 
-    public static void searchEmployeeByName(Scanner scanner) {
-        System.out.println("Tên nhân viên bạn muốn tìm kiếm:");
+    public static void searchAccountByUserName(Scanner scanner) {
+        System.out.println("tên người dùng bạn muốn tìm kiếm:");
         String searchName = scanner.nextLine();
         int numPager = 1;
         boolean isExit = true;
 
         do {
-            List<Employee> listEmployee = employeeBussiness.searchName(searchName, numPager);
+            List<Account> listAccount =  accountBussiness.searchName(searchName, numPager);
 
-            if (listEmployee.isEmpty() && numPager == 1) {
-                System.err.println("không tìm thấy nhân viên!");
+            if (listAccount.isEmpty() && numPager == 1) {
+                System.err.println("không tìm thấy tài khoản!");
                 isExit = false;
             } else {
-                listEmployee.stream().forEach(System.out::println);
-                if (listEmployee.size() < 10) {
+                listAccount.stream().forEach(System.out::println);
+                if (listAccount.size() < 10) {
+                    isExit = false;
+                } else {
+                    System.out.println("nhấn phím 1 để xem thêm, phím 2 để thoát");
+                    try {
+                        int choice = Integer.parseInt(scanner.nextLine());
+
+                        switch (choice) {
+                            case 1:
+                                numPager++;
+                                break;
+                            case 2:
+                                isExit = false;
+                                break;
+                            default:
+                                System.out.println("vui lòng chọn 1 trong 2 lưa chọn trên!");
+                        }
+                    } catch (NumberFormatException e) {
+                        System.err.println("vui lòng nhập số nguyên!");
+                    } catch (Exception ex) {
+                        System.err.println(ex.getMessage());
+                    }
+                }
+            }
+        } while (isExit);
+    }
+
+    public static void searchAccountByEmployeeName(Scanner scanner) {
+        System.out.println("tên nhân viên bạn muốn tìm kiếm tài khoản:");
+        String employeeName = scanner.nextLine();
+
+        int numPager = 1;
+        boolean isExit = true;
+
+        do {
+            List<Account> listAccount =  accountBussiness.searchName(employeeName, numPager);
+
+            if (listAccount.isEmpty() && numPager == 1) {
+                System.err.println("không tìm thấy tài khoản!");
+                isExit = false;
+            } else {
+                listAccount.stream().forEach(System.out::println);
+                if (listAccount.size() < 10) {
                     isExit = false;
                 } else {
                     System.out.println("nhấn phím 1 để xem thêm, phím 2 để thoát");
