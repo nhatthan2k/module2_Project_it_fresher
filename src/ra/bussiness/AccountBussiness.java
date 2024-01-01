@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountBussiness implements IBussiness<Account, Integer, String, Integer>{
+public class AccountBussiness implements IBussiness<Account, Integer, String, Integer> {
 
     @Override
     public List<Account> getAll(Integer integer) {
@@ -116,7 +116,7 @@ public class AccountBussiness implements IBussiness<Account, Integer, String, In
             callSt.setInt(1, integer);
             ResultSet rs = callSt.executeQuery();
 
-            if(rs.next()) {
+            if (rs.next()) {
                 account = new Account();
                 account.setAccId(rs.getInt("Acc_Id"));
                 account.setUserName(rs.getString("User_Name"));
@@ -146,7 +146,7 @@ public class AccountBussiness implements IBussiness<Account, Integer, String, In
             callSt.setString(1, s);
             ResultSet rs = callSt.executeQuery();
 
-            if(rs.next()) {
+            if (rs.next()) {
                 account = new Account();
                 account.setAccId(rs.getInt("Acc_Id"));
                 account.setUserName(rs.getString("User_Name"));
@@ -174,11 +174,11 @@ public class AccountBussiness implements IBussiness<Account, Integer, String, In
         try {
             callSt = conn.prepareCall("{call search_username(?,?)}");
             callSt.setString(1, s);
-            callSt.setInt(2,integer);
+            callSt.setInt(2, integer);
             ResultSet rs = callSt.executeQuery();
             listAccount = new ArrayList<>();
 
-            if(rs.next()) {
+            if (rs.next()) {
                 Account account = new Account();
                 account.setAccId(rs.getInt("Acc_Id"));
                 account.setUserName(rs.getString("User_Name"));
@@ -208,7 +208,7 @@ public class AccountBussiness implements IBussiness<Account, Integer, String, In
             callSt.setString(1, s);
             ResultSet rs = callSt.executeQuery();
 
-            if(rs.next()) {
+            if (rs.next()) {
                 account = new Account();
                 account.setAccId(rs.getInt("Acc_Id"));
                 account.setUserName(rs.getString("User_Name"));
@@ -235,11 +235,11 @@ public class AccountBussiness implements IBussiness<Account, Integer, String, In
         try {
             callSt = conn.prepareCall("{call search_acc_by_emp_name(?,?)}");
             callSt.setString(1, s);
-            callSt.setInt(2,integer);
+            callSt.setInt(2, integer);
             ResultSet rs = callSt.executeQuery();
             listAccount = new ArrayList<>();
 
-            if(rs.next()) {
+            if (rs.next()) {
                 Account account = new Account();
                 account.setAccId(rs.getInt("Acc_Id"));
                 account.setUserName(rs.getString("User_Name"));

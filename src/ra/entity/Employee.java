@@ -293,7 +293,7 @@ public class Employee {
             } catch (NumberFormatException e) {
                 System.err.println("vui lòng nhâp số nguyên!");
             } catch (Exception ex) {
-                System.err.println(ex.getMessage());
+                ex.printStackTrace();
             }
         } while (isExit);
     }

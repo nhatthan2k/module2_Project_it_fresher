@@ -33,10 +33,13 @@ public class AdminPresentation {
                         AccountPresentation.accountMenu(scanner);
                         break;
                     case 4:
+                        BillInPresentation.BillInMenu(scanner);
                         break;
                     case 5:
+                        BillOutPresentation.BillOutMenu(scanner);
                         break;
                     case 6:
+                        ReportPresentation.ReportMenu(scanner);
                         break;
                     case 7:
                         System.exit(0);
@@ -53,6 +56,6 @@ public class AdminPresentation {
                 System.err.println(ex.getMessage());
             }
 
-        }while (isExit);
+        } while (isExit);
     }
 }

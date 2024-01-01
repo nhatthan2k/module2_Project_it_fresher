@@ -12,6 +12,7 @@ import static ra.presentation.EmployeePresentation.employeeBussiness;
 
 public class AccountPresentation {
     public static IBussiness accountBussiness = new AccountBussiness();
+
     public static void accountMenu(Scanner scanner) {
         boolean isExit = true;
 
@@ -87,7 +88,7 @@ public class AccountPresentation {
         } while (isExit);
     }
 
-    public static void createAccount(Scanner scanner) {
+       public static void createAccount(Scanner scanner) {
         Account account = new Account();
         account.inputData(scanner);
         boolean result = accountBussiness.create(account);
@@ -122,6 +123,7 @@ public class AccountPresentation {
             System.err.println(ex.getMessage());
         }
     }
+
     public static void searchAccount(Scanner scanner) {
         boolean isExit = true;
         do {
@@ -139,7 +141,7 @@ public class AccountPresentation {
                         searchAccountByUserName(scanner);
                         break;
                     case 2:
-                       searchAccountByEmployeeName(scanner);
+                        searchAccountByEmployeeName(scanner);
                         break;
                     case 3:
                         isExit = false;
@@ -162,7 +164,7 @@ public class AccountPresentation {
         boolean isExit = true;
 
         do {
-            List<Account> listAccount =  accountBussiness.searchName(searchName, numPager);
+            List<Account> listAccount = accountBussiness.searchName(searchName, numPager);
 
             if (listAccount.isEmpty() && numPager == 1) {
                 System.err.println("không tìm thấy tài khoản!");
@@ -204,7 +206,7 @@ public class AccountPresentation {
         boolean isExit = true;
 
         do {
-            List<Account> listAccount =  accountBussiness.searchName(employeeName, numPager);
+            List<Account> listAccount = AccountBussiness.searchAccountbyEmpName(employeeName, numPager);
 
             if (listAccount.isEmpty() && numPager == 1) {
                 System.err.println("không tìm thấy tài khoản!");

@@ -1,11 +1,15 @@
 package ra.presentation;
 
+import ra.bussiness.AccountBussiness;
 import ra.bussiness.EmployeeBussiness;
 import ra.bussiness.IBussiness;
+import ra.entity.Account;
 import ra.entity.Employee;
 
 import java.util.List;
 import java.util.Scanner;
+
+import static ra.presentation.AccountPresentation.accountBussiness;
 
 public class EmployeePresentation {
 
@@ -221,6 +225,16 @@ public class EmployeePresentation {
                 boolean result = employeeBussiness.update(employee);
                 if (result) {
                     System.out.println("cập nhật thành công!");
+                    if (employee.getEmployeeStatus() == 1 || employee.getEmployeeStatus() == 2) {
+                        Account account = AccountBussiness.findAccountByEmpId(employee.getEmployeeId());
+                        account.setAccStatus(false);
+                        boolean resultAcc = accountBussiness.update(account);
+                        if (resultAcc) {
+                            System.out.println("cập nhật trạng thái tài khoản thành công!");
+                        } else {
+                            System.err.println("cập nhật trạng thái tài khoản thất bại!");
+                        }
+                    }
                 } else {
                     System.err.println("cập nhật thất bại!");
                 }

@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductBussiness implements IBussiness<Product, String, String, Integer>{
+public class ProductBussiness implements IBussiness<Product, String, String, Integer> {
 
     @Override
     public List<Product> getAll(Integer integer) {

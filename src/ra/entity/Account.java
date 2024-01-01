@@ -141,7 +141,7 @@ public class Account implements Serializable {
                 return Boolean.parseBoolean(Permission);
             } else {
                 System.err.println("Quyền tài khoản tài khoản chỉ nhận giá là true hoặc false!");
-        }
+            }
         } while (true);
     }
 
@@ -157,13 +157,13 @@ public class Account implements Serializable {
                     } else {
                         return empId;
                     }
-                }else {
+                } else {
                     System.err.println("mã nhân viên sở hữu tài khoản đã tồn tại!");
                 }
             } else {
                 System.err.println("Mã nhân viên có 5 kí tự! vui lòng nhập lại");
             }
-        }while (true);
+        } while (true);
     }
 
     public boolean inputAccountStatus(Scanner scanner) {
