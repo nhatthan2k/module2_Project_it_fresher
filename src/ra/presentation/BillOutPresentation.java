@@ -99,7 +99,7 @@ public class BillOutPresentation {
 
     public static void createBillOut(Scanner scanner) {
         Bill bill = new Bill();
-        bill.inputData(scanner, false);
+        bill.inputData(scanner, false, null);
         boolean result = billBussiness.create(bill);
         if (result) {
             System.out.println("thêm mới phiếu xuất thành công!");

@@ -13,7 +13,7 @@ public class Main {
             if (!account.isPermission()) {
                 AdminPresentation.adminMenu(scanner);
             } else {
-                UserPresentation.userMenu(scanner);
+                UserPresentation.userMenu(scanner, account);
             }
             inputLogin(scanner, account);
         } else {
@@ -40,7 +40,7 @@ public class Main {
                 if (!account.isPermission()) {
                     AdminPresentation.adminMenu(scanner);
                 } else {
-                    UserPresentation.userMenu(scanner);
+                    UserPresentation.userMenu(scanner, account);
                 }
             }
         } while (true);

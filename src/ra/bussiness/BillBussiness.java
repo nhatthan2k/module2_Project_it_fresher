@@ -260,4 +260,73 @@ public class BillBussiness implements IBussiness<Bill, Integer, String, Integer>
         }
         return result;
     }
+
+    //   userBillManager
+    public static List<Bill> getAllBillInByStatus(Integer integer, String s) {
+        Connection conn = ConnectionDB.openConnection();
+        CallableStatement callSt = null;
+        List<Bill> listBill = null;
+
+        try {
+            callSt = conn.prepareCall("{call get_list_bill_in_by_status(?,?)}");
+            callSt.setInt(1, integer);
+            callSt.setString(2, s);
+            ResultSet rs = callSt.executeQuery();
+            listBill = new ArrayList<>();
+
+            while (rs.next()) {
+                Bill bill = new Bill();
+                bill.setBillId(rs.getInt("Bill_Id"));
+                bill.setBillCode(rs.getString("Bill_Code"));
+                bill.setBillType(rs.getBoolean("Bill_Type"));
+                bill.setEmployeeIdCreate(rs.getString("Emp_id_created"));
+                bill.setCreateDate(rs.getDate("Created"));
+                bill.setEmployeeIdAuth(rs.getString("Emp_id_auth"));
+                bill.setAuthDate(rs.getDate("Auth_date"));
+                bill.setBillStatus(rs.getInt("Bill_Status"));
+                listBill.add(bill);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            ConnectionDB.closeConnection(conn);
+        }
+        return listBill;
+    }
+
+    public static List<Bill> getAllBillOutByStatus(Integer integer, String s) {
+        Connection conn = ConnectionDB.openConnection();
+        CallableStatement callSt = null;
+        List<Bill> listBill = null;
+
+        try {
+            callSt = conn.prepareCall("{call get_list_bill_out_by_status(?,?)}");
+            callSt.setInt(1, integer);
+            callSt.setString(2, s);
+            ResultSet rs = callSt.executeQuery();
+            listBill = new ArrayList<>();
+
+            while (rs.next()) {
+                Bill bill = new Bill();
+                bill.setBillId(rs.getInt("Bill_Id"));
+                bill.setBillCode(rs.getString("Bill_Code"));
+                bill.setBillType(rs.getBoolean("Bill_Type"));
+                bill.setEmployeeIdCreate(rs.getString("Emp_id_created"));
+                bill.setCreateDate(rs.getDate("Created"));
+                bill.setEmployeeIdAuth(rs.getString("Emp_id_auth"));
+                bill.setAuthDate(rs.getDate("Auth_date"));
+                bill.setBillStatus(rs.getInt("Bill_Status"));
+                listBill.add(bill);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            ConnectionDB.closeConnection(conn);
+        }
+        return listBill;
+    }
 }

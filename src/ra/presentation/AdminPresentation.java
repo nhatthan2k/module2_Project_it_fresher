@@ -16,8 +16,8 @@ public class AdminPresentation {
                     "4. Quản lý phiếu nhập\n" +
                     "5. Quản lý phiếu xuất\n" +
                     "6. Quản lý báo cáo\n" +
-                    "7. Thoát");
-            System.out.println("8. logout");
+                    "7. đăng xuất");
+            System.out.println("8. thoát");
             System.out.println("lựa chọn của bạn:");
             try {
                 int choice = Integer.parseInt(scanner.nextLine());
@@ -42,11 +42,11 @@ public class AdminPresentation {
                         ReportPresentation.ReportMenu(scanner);
                         break;
                     case 7:
-                        System.exit(0);
-                    case 8:
                         userBussiness.writeAccountToFile(null);
                         isExit = false;
                         break;
+                    case 8:
+                        System.exit(0);
                     default:
                         System.out.println("vui lòng chọn từ 1 - 8!");
                 }

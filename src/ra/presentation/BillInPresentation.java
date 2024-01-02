@@ -101,7 +101,7 @@ public class BillInPresentation {
 
     public static void createBillIn(Scanner scanner) {
         Bill bill = new Bill();
-        bill.inputData(scanner, true);
+        bill.inputData(scanner, true, null);
         boolean result = billBussiness.create(bill);
         if (result) {
             System.out.println("thêm mới phiếu nhập thành công!");

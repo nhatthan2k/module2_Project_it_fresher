@@ -97,10 +97,14 @@ public class Bill {
         this.billStatus = billStatus;
     }
 
-    public void inputData(Scanner scanner, Boolean billType) {
+    public void inputData(Scanner scanner, Boolean billType, String empIdCreate) {
         this.billCode = inputBillCode(scanner);
         this.billType = billType;
-        this.employeeIdCreate = inputEmpCreate(scanner);
+        if(empIdCreate == null) {
+            this.employeeIdCreate = inputEmpCreate(scanner);
+        } else {
+            this.employeeIdCreate = empIdCreate;
+        }
         this.employeeIdAuth = inputEmpAuth(scanner);
 
     }
