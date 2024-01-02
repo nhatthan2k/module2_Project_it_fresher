@@ -55,11 +55,18 @@ public class AccountPresentation {
         } while (isExit);
     }
 
+    public static void formatPrintAcc() {
+        System.out.println("-----------------------------------------------------------------------------------------------------");
+        System.out.println("| Mã tài khoản | Tên tài khoản |  Mật khẩu  | Quyền tài khoản | Mã nhân viên | Trạng thái tài khoản |");
+        System.out.println("-----------------------------------------------------------------------------------------------------");
+    }
+
     public static void displayAccount(Scanner scanner) {
         int numPager = 1;
         boolean isExit = true;
         do {
             List<Account> listAccount = accountBussiness.getAll(numPager);
+            formatPrintAcc();
             listAccount.stream().forEach(System.out::println);
 
             if (listAccount.size() < 10) {
@@ -170,6 +177,7 @@ public class AccountPresentation {
                 System.err.println("không tìm thấy tài khoản!");
                 isExit = false;
             } else {
+                formatPrintAcc();
                 listAccount.stream().forEach(System.out::println);
                 if (listAccount.size() < 10) {
                     isExit = false;
@@ -212,6 +220,7 @@ public class AccountPresentation {
                 System.err.println("không tìm thấy tài khoản!");
                 isExit = false;
             } else {
+                formatPrintAcc();
                 listAccount.stream().forEach(System.out::println);
                 if (listAccount.size() < 10) {
                     isExit = false;

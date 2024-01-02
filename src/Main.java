@@ -11,7 +11,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         if (account != null) {
             if (!account.isPermission()) {
-                AdminPresentation.adminMenu(scanner);
+                AdminPresentation.adminMenu(scanner, account);
             } else {
                 UserPresentation.userMenu(scanner, account);
             }
@@ -38,7 +38,7 @@ public class Main {
             } else {
                 userBussiness.writeAccountToFile(account);
                 if (!account.isPermission()) {
-                    AdminPresentation.adminMenu(scanner);
+                    AdminPresentation.adminMenu(scanner, account);
                 } else {
                     UserPresentation.userMenu(scanner, account);
                 }

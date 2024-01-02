@@ -170,21 +170,11 @@ public class Product {
         } while (true);
     }
 
-    public void displayData() {
-
-    }
-
     @Override
     public String toString() {
-        return "Product{" +
-                "productId='" + productId + '\'' +
-                ", productName='" + productName + '\'' +
-                ", manufacturer='" + manufacturer + '\'' +
-                ", createdDate=" + createdDate +
-                ", batch=" + batch +
-                ", quantity=" + quantity +
-                ", status=" + status +
-                '}';
+        return String.format("| %11s | %16s | %14s | %10s | %10d | %11d | %19s |\n" +
+                        "-----------------------------------------------------------------------------------------------------------------",
+                this.productId, this.productName, this.manufacturer, this.createdDate, this.batch, this.quantity, this.status ? "Hoạt động" : "Không hoạt động");
     }
 
     public void updateData(Scanner scanner) {

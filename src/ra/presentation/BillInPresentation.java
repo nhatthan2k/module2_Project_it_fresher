@@ -17,7 +17,7 @@ public class BillInPresentation {
 
     public static BillDetailBussiness billDetailBussiness = new BillDetailBussiness();
 
-    public static void BillInMenu(Scanner scanner) {
+    public static void BillInMenu(Scanner scanner, Account account) {
         boolean isExit = true;
         do {
             System.out.println("******************RECEIPT MANAGEMENT****************\n" +
@@ -38,7 +38,7 @@ public class BillInPresentation {
                         displayBillIn(scanner);
                         break;
                     case 2:
-                        createBillIn(scanner);
+                        createBillIn(scanner, account);
                         break;
                     case 3:
                         inputUpdateBillInId(scanner);
@@ -66,11 +66,25 @@ public class BillInPresentation {
         } while (isExit);
     }
 
+    public static void formatPrintBill() {
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("| Mã phiếu |  Mã code |  Loại phiếu  | Mã nhân viên nhập |  Ngày tạo  |" +
+                " Mã nhân viên duyệt | Ngày duyệt | Trạng thái phiếu |");
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------");
+    }
+
+    public static void formatPrintBillDetail() {
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("| Mã phiếu chi tiết | Mã phiếu xuất | Mã sản phẩm | Số lượng xuất | Giá xuất |");
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------");
+    }
+
     public static void displayBillIn(Scanner scanner) {
         int numPager = 1;
         boolean isExit = true;
         do {
             List<Bill> listBillIn = billBussiness.getAll(numPager);
+            formatPrintBill();
             listBillIn.stream().forEach(System.out::println);
 
             if (listBillIn.size() < 10) {
@@ -99,9 +113,9 @@ public class BillInPresentation {
         } while (isExit);
     }
 
-    public static void createBillIn(Scanner scanner) {
+    public static void createBillIn(Scanner scanner, Account account) {
         Bill bill = new Bill();
-        bill.inputData(scanner, true, null);
+        bill.inputData(scanner, true, account.getEmpId());
         boolean result = billBussiness.create(bill);
         if (result) {
             System.out.println("thêm mới phiếu nhập thành công!");
@@ -245,6 +259,7 @@ public class BillInPresentation {
 
             if (bill != null && bill.isBillType() == true) {
                 List<BillDetail> listBillDetail = BillDetailBussiness.findByBillId(billId);
+                formatPrintBillDetail();
                 listBillDetail.stream().forEach(System.out::println);
             } else {
                 System.err.println("không tồn tại mã phiếu nhập!");
@@ -274,9 +289,11 @@ public class BillInPresentation {
 
         if (bill != null && bill.isBillType() == true) {
             System.out.println("thông tin phiếu bạn muốn duyệt:");
+            formatPrintBill();
             bill.displayData();
             System.out.println("thông tin chi tiết phiếu:");
             List<BillDetail> listBillDetail = BillDetailBussiness.findByBillId(billId);
+            formatPrintBillDetail();
             listBillDetail.stream().forEach(System.out::println);
 
             boolean isExit = true;
@@ -325,9 +342,11 @@ public class BillInPresentation {
 
             if (bill != null && bill.isBillType() == true) {
                 System.out.println("thông tin phiếu bạn muốn tìm kiếm:");
+                formatPrintBill();
                 bill.displayData();
                 System.out.println("thông tin chi tiết phiếu:");
                 List<BillDetail> listBillDetail = BillDetailBussiness.findByBillId(billId);
+                formatPrintBillDetail();
                 listBillDetail.stream().forEach(System.out::println);
 
                 boolean isExit = true;

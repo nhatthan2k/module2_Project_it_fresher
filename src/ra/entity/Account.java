@@ -86,20 +86,16 @@ public class Account implements Serializable {
     }
 
     public void displayData() {
-        System.out.printf("accountId: %d, userName: %s, password: %s, permission: %s, empId: %s, accStatus: %s,\n",
-                this.accId, this.userName, this.password, this.permission, this.empId, this.accStatus);
+        System.out.printf("| %12d | %13s | %10s | %15s | %12s | %20s |\n",
+                this.accId, this.userName, this.password, this.permission ? "Admin" : "User", this.empId, this.accStatus ? "Hoạt động" : "Bị khóa");
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------");
     }
 
     @Override
     public String toString() {
-        return "Account{" +
-                "accId=" + accId +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", permission=" + permission +
-                ", empId='" + empId + '\'' +
-                ", accStatus=" + accStatus +
-                '}';
+        return String.format("| %12d | %13s | %10s | %15s | %12s | %20s |\n" +
+                        "-----------------------------------------------------------------------------------------------------",
+                this.accId, this.userName, this.password, this.permission ? "Admin" : "User", this.empId, this.accStatus ? "Hoạt động" : "Bị khóa");
     }
 
     public String inputUserName(Scanner scanner) {

@@ -1,11 +1,12 @@
 package ra.presentation;
 
 import ra.bussiness.userBussiness;
+import ra.entity.Account;
 
 import java.util.Scanner;
 
 public class AdminPresentation {
-    public static void adminMenu(Scanner scanner) {
+    public static void adminMenu(Scanner scanner, Account account) {
         boolean isExit = true;
 
         do {
@@ -33,10 +34,10 @@ public class AdminPresentation {
                         AccountPresentation.accountMenu(scanner);
                         break;
                     case 4:
-                        BillInPresentation.BillInMenu(scanner);
+                        BillInPresentation.BillInMenu(scanner, account);
                         break;
                     case 5:
-                        BillOutPresentation.BillOutMenu(scanner);
+                        BillOutPresentation.BillOutMenu(scanner, account);
                         break;
                     case 6:
                         ReportPresentation.ReportMenu(scanner);

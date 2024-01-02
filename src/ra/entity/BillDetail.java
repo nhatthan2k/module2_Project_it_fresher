@@ -164,12 +164,8 @@ public class BillDetail {
 
     @Override
     public String toString() {
-        return "BillDetail{" +
-                "billDetailId=" + billDetailId +
-                ", billId=" + billId +
-                ", productID='" + productID + '\'' +
-                ", quantity=" + quantity +
-                ", price=" + price +
-                '}';
+        return String.format("| %17d | %13d | %11s | %13d |     %.2f     |\n" +
+                        "----------------------------------------------------------------------------------------------------------------------------",
+                this.billDetailId, this.billId, this.productID, this.quantity, this.price);
     }
 }

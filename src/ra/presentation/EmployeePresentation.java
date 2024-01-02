@@ -60,11 +60,19 @@ public class EmployeePresentation {
         } while (isExit);
     }
 
+    public static void formatPrintEmp() {
+        System.out.println("----------------------------------------------------------------------------------------------------------------------");
+        System.out.println("| Mã nhân viên | Tên nhân viên |  Ngày sinh |       Email       | Số điện thoại |" +
+                "   Địa chỉ   | Trạng thái nhân viên |");
+        System.out.println("----------------------------------------------------------------------------------------------------------------------");
+    }
+
     public static void displayEmployee(Scanner scanner) {
         int numPager = 1;
         boolean isExit = true;
         do {
             List<Employee> listEmployee = employeeBussiness.getAll(numPager);
+            formatPrintEmp();
             listEmployee.stream().forEach(System.out::println);
 
             if (listEmployee.size() < 10) {
@@ -152,6 +160,7 @@ public class EmployeePresentation {
                                 System.err.println("mã nhân viên không tồn tại!");
                             } else {
                                 Employee employee = (Employee) employeeBussiness.findById(employeeId);
+                                formatPrintEmp();
                                 employee.displayData();
                             }
                         } else {
@@ -185,6 +194,7 @@ public class EmployeePresentation {
                 System.err.println("không tìm thấy nhân viên!");
                 isExit = false;
             } else {
+                formatPrintEmp();
                 listEmployee.stream().forEach(System.out::println);
                 if (listEmployee.size() < 10) {
                     isExit = false;

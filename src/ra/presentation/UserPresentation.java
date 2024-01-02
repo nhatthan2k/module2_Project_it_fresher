@@ -78,15 +78,31 @@ public class UserPresentation {
         } while (isExit);
     }
 
+    public static void formatPrintBill() {
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("| Mã phiếu |  Mã code |  Loại phiếu  | Mã nhân viên nhập |  Ngày tạo  |" +
+                " Mã nhân viên duyệt | Ngày duyệt | Trạng thái phiếu |");
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------");
+    }
+
+    public static void formatPrintBillDetail() {
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("| Mã phiếu chi tiết | Mã phiếu xuất | Mã sản phẩm | Số lượng xuất | Giá xuất |");
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------");
+    }
+
     public static void displayBillInByStatus(Account account) {
         List<Bill> listBillInCreate = BillBussiness.getAllBillInByStatus(0, account.getEmpId());
         List<Bill> listBillInCancel = BillBussiness.getAllBillInByStatus(1, account.getEmpId());
         List<Bill> listBillInAccept = BillBussiness.getAllBillInByStatus(2, account.getEmpId());
         System.out.println("danh sách phiếu nhập ở trạng thái tạo:");
+        formatPrintBill();
         listBillInCreate.stream().forEach(System.out::println);
         System.out.println("danh sách phiếu nhập ở trạng thái hủy:");
+        formatPrintBill();
         listBillInCancel.stream().forEach(System.out::println);
         System.out.println("danh sách phiếu nhập ở trạng thái duyệt:");
+        formatPrintBill();
         listBillInAccept.stream().forEach(System.out::println);
     }
 
@@ -241,9 +257,11 @@ public class UserPresentation {
             if (bill != null && bill.isBillType() == true) {
                 if (bill.getEmployeeIdCreate() == account.getEmpId()) {
                     System.out.println("thông tin phiếu bạn muốn tìm kiếm:");
+                    formatPrintBill();
                     bill.displayData();
                     System.out.println("thông tin chi tiết phiếu:");
                     List<BillDetail> listBillDetail = BillDetailBussiness.findByBillId(billId);
+                    formatPrintBillDetail();
                     listBillDetail.stream().forEach(System.out::println);
                 }else {
                     System.err.println("bạn chỉ có thể tìm phiếu của chính mình!");
@@ -263,10 +281,13 @@ public class UserPresentation {
         List<Bill> listBillOutCancel = BillBussiness.getAllBillOutByStatus(1, account.getEmpId());
         List<Bill> listBillOutAccept = BillBussiness.getAllBillOutByStatus(2, account.getEmpId());
         System.out.println("danh sách phiếu xuất ở trạng thái tạo:");
+        formatPrintBill();
         listBillOutCreate.stream().forEach(System.out::println);
         System.out.println("danh sách phiếu xuất ở trạng thái hủy:");
+        formatPrintBill();
         listBillOutCancel.stream().forEach(System.out::println);
         System.out.println("danh sách phiếu xuất ở trạng thái duyệt:");
+        formatPrintBill();
         listBillOutAccept.stream().forEach(System.out::println);
     }
 
@@ -421,9 +442,11 @@ public class UserPresentation {
             if (bill != null && bill.isBillType() == false) {
                 if (bill.getEmployeeIdCreate() == account.getEmpId()) {
                     System.out.println("thông tin phiếu bạn muốn tìm kiếm:");
+                    formatPrintBill();
                     bill.displayData();
                     System.out.println("thông tin chi tiết phiếu:");
                     List<BillDetail> listBillDetail = BillDetailBussiness.findByBillId(billId);
+                    formatPrintBillDetail();
                     listBillDetail.stream().forEach(System.out::println);
                 }else {
                     System.err.println("bạn chỉ có thể tìm phiếu của chính mình!");

@@ -55,12 +55,20 @@ public class ProductPresentation {
         } while (isExit);
     }
 
+    public static void formatPrintPro() {
+        System.out.println("-----------------------------------------------------------------------------------------------------------------");
+        System.out.println("| Mã sản phẩm |   Tên sản phẩm   |  Nhà sản xuất  |  Ngày tạo  | Lô chứa SP |" +
+                " Số lượng SP | Trạng thái sản phẩm |");
+        System.out.println("-----------------------------------------------------------------------------------------------------------------");
+    }
+
     public static void displayProduct(Scanner scanner) {
         int numPager = 1;
         boolean isExit = true;
 
         do {
             List<Product> listProduct = productBussiness.getAll(numPager);
+            formatPrintPro();
             listProduct.stream().forEach(System.out::println);
 
             if (listProduct.size() < 10) {
@@ -137,6 +145,7 @@ public class ProductPresentation {
                 System.err.println("không tìm thấy sản phẩm!");
                 isExit = false;
             } else {
+                formatPrintPro();
                 listProduct.stream().forEach(System.out::println);
                 if (listProduct.size() < 10) {
                     isExit = false;

@@ -200,21 +200,18 @@ public class Employee {
     }
 
     public void displayData() {
-        System.out.printf("employeeId: %s, employeeName: %s, birthOfDate: %s, email: %s, phone: %s, address: %s, " +
-                "employeeStatus: %s\n", this.employeeId, this.employeeName, this.birthOfDate, this.email, this.phone, this.address, this.employeeStatus);
+        System.out.printf("| %12s | %13s | %10s | %17s | %13s | %11s | %20s |\n",
+                this.employeeId, this.employeeName, this.birthOfDate, this.email,
+                this.phone, this.address, this.employeeStatus == 0 ? "Hoạt động" : (this.employeeStatus == 1 ? "Nghỉ chế độ" : "Nghỉ việc"));
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------");
     }
 
     @Override
     public String toString() {
-        return "Employee{" +
-                "employeeId='" + employeeId + '\'' +
-                ", employeeName='" + employeeName + '\'' +
-                ", birthOfDate=" + birthOfDate +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", address='" + address + '\'' +
-                ", employeeStatus=" + employeeStatus +
-                '}';
+        return String.format("| %12s | %13s | %10s | %17s | %13s | %11s | %20s |\n" +
+                        "----------------------------------------------------------------------------------------------------------------------",
+                this.employeeId, this.employeeName, this.birthOfDate, this.email,
+                this.phone, this.address, this.employeeStatus == 0 ? "Hoạt động" : (this.employeeStatus == 1 ? "Nghỉ chế độ" : "Nghỉ việc"));
     }
 
     public void updateData(Scanner scanner) {

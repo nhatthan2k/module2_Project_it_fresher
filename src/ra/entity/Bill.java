@@ -100,33 +100,24 @@ public class Bill {
     public void inputData(Scanner scanner, Boolean billType, String empIdCreate) {
         this.billCode = inputBillCode(scanner);
         this.billType = billType;
-        if(empIdCreate == null) {
-            this.employeeIdCreate = inputEmpCreate(scanner);
-        } else {
-            this.employeeIdCreate = empIdCreate;
-        }
+        this.employeeIdCreate = empIdCreate;
         this.employeeIdAuth = inputEmpAuth(scanner);
 
     }
 
     public void displayData() {
-        System.out.printf("billId: %d, billCode: %s, billType: %s, employeeIdCreate: %s, createDate: %s, employeeIdAuth: %s," +
-                        "authDate: %s, billStatus: %s\n",
-                this.billId, this.billCode, this.billType, this.employeeIdCreate, this.createDate, this.employeeIdAuth, this.authDate, this.billStatus);
+        System.out.printf("| %8d | %8s | %12s | %17s | %10s | %18s | %10s | %16s |\n",
+                this.billId, this.billCode, this.billType ? "Phiếu nhập" : "Phiếu xuất", this.employeeIdCreate,
+                this.createDate, this.employeeIdAuth, this.authDate, this.billStatus == 0 ? "Tạo phiếu" : (this.billStatus == 1 ? "Hủy phiếu" : "Duyệt phiếu"));
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------");
     }
 
     @Override
     public String toString() {
-        return "Bill{" +
-                "billId=" + billId +
-                ", billCode='" + billCode + '\'' +
-                ", billType=" + billType +
-                ", employeeIdCreate='" + employeeIdCreate + '\'' +
-                ", createDate=" + createDate +
-                ", employeeIdAuth='" + employeeIdAuth + '\'' +
-                ", authDate=" + authDate +
-                ", billStatus=" + billStatus +
-                '}';
+        return String.format("| %8d | %8s | %12s | %17s | %10s | %18s | %10s | %16s |\n" +
+                        "----------------------------------------------------------------------------------------------------------------------------",
+                this.billId, this.billCode, this.billType ? "Phiếu nhập" : "Phiếu xuất", this.employeeIdCreate,
+                this.createDate, this.employeeIdAuth, this.authDate, this.billStatus == 0 ? "Tạo phiếu" : (this.billStatus == 1 ? "Hủy phiếu" : "Duyệt phiếu"));
     }
 
     public String inputBillCode(Scanner scanner) {

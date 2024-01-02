@@ -3,6 +3,7 @@ package ra.presentation;
 import ra.bussiness.BillBussiness;
 import ra.bussiness.BillDetailBussiness;
 import ra.bussiness.ProductBussiness;
+import ra.entity.Account;
 import ra.entity.Bill;
 import ra.entity.BillDetail;
 import ra.entity.Product;
@@ -15,7 +16,7 @@ import static ra.presentation.BillInPresentation.billDetailBussiness;
 import static ra.presentation.ProductPresentation.productBussiness;
 
 public class BillOutPresentation {
-    public static void BillOutMenu(Scanner scanner) {
+    public static void BillOutMenu(Scanner scanner, Account account) {
         boolean isExit = true;
         do {
             System.out.println("******************BILL MANAGEMENT****************\n" +
@@ -36,7 +37,7 @@ public class BillOutPresentation {
                         displayBillOut(scanner);
                         break;
                     case 2:
-                        createBillOut(scanner);
+                        createBillOut(scanner, account);
                         break;
                     case 3:
                         inputUpdateBillOut(scanner);
@@ -64,11 +65,25 @@ public class BillOutPresentation {
         } while (isExit);
     }
 
+    public static void formatPrintBill() {
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("| Mã phiếu |  Mã code |  Loại phiếu  | Mã nhân viên nhập |  Ngày tạo  |" +
+                " Mã nhân viên duyệt | Ngày duyệt | Trạng thái phiếu |");
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------");
+    }
+
+    public static void formatPrintBillDetail() {
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("| Mã phiếu chi tiết | Mã phiếu xuất | Mã sản phẩm | Số lượng xuất | Giá xuất |");
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------");
+    }
+
     public static void displayBillOut(Scanner scanner) {
         int numPager = 1;
         boolean isExit = true;
         do {
             List<Bill> listBillOut = BillBussiness.getAllBillOut(numPager);
+            formatPrintBill();
             listBillOut.stream().forEach(System.out::println);
 
             if (listBillOut.size() < 10) {
@@ -97,9 +112,9 @@ public class BillOutPresentation {
         } while (isExit);
     }
 
-    public static void createBillOut(Scanner scanner) {
+    public static void createBillOut(Scanner scanner, Account account) {
         Bill bill = new Bill();
-        bill.inputData(scanner, false, null);
+        bill.inputData(scanner, false, account.getEmpId());
         boolean result = billBussiness.create(bill);
         if (result) {
             System.out.println("thêm mới phiếu xuất thành công!");
@@ -243,6 +258,7 @@ public class BillOutPresentation {
 
             if (bill != null && bill.isBillType() == false) {
                 List<BillDetail> listBillDetail = BillDetailBussiness.findByBillId(billId);
+                formatPrintBillDetail();
                 listBillDetail.stream().forEach(System.out::println);
             } else {
                 System.err.println("không tồn tại mã phiếu xuất!");
@@ -272,9 +288,11 @@ public class BillOutPresentation {
 
         if (bill != null && bill.isBillType() == false) {
             System.out.println("thông tin phiếu bạn muốn duyệt:");
+            formatPrintBill();
             bill.displayData();
             System.out.println("thông tin chi tiết phiếu:");
             List<BillDetail> listBillDetail = BillDetailBussiness.findByBillId(billId);
+            formatPrintBillDetail();
             listBillDetail.stream().forEach(System.out::println);
 
             boolean isExit = true;
@@ -291,7 +309,7 @@ public class BillOutPresentation {
                             if(listBillDetail.size() > 0) {
                                 for (BillDetail billDetail: listBillDetail) {
                                     Product product = (Product) productBussiness.findById(billDetail.getProductID());
-                                    int newQuantityProduct = billDetail.getQuantity() + product.getQuantity();
+                                    int newQuantityProduct = product.getQuantity() - billDetail.getQuantity();
                                     ProductBussiness.updateQuantityProduct(billDetail.getProductID(), newQuantityProduct);
                                 }
                             }
@@ -323,8 +341,10 @@ public class BillOutPresentation {
 
             if (bill != null && bill.isBillType() == false) {
                 System.out.println("thông tin phiếu bạn muốn tìm kiếm:");
+                formatPrintBill();
                 bill.displayData();
                 System.out.println("thông tin chi tiết phiếu:");
+                formatPrintBillDetail();
                 List<BillDetail> listBillDetail = BillDetailBussiness.findByBillId(billId);
                 listBillDetail.stream().forEach(System.out::println);
 
