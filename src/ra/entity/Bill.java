@@ -105,6 +105,12 @@ public class Bill {
 
     }
 
+    public void displayData() {
+        System.out.printf("billId: %d, billCode: %s, billType: %s, employeeIdCreate: %s, createDate: %s, employeeIdAuth: %s," +
+                        "authDate: %s, billStatus: %s\n",
+                this.billId, this.billCode, this.billType, this.employeeIdCreate, this.createDate, this.employeeIdAuth, this.authDate, this.billStatus);
+    }
+
     @Override
     public String toString() {
         return "Bill{" +
@@ -168,5 +174,77 @@ public class Bill {
                 System.err.println("Mã nhân viên có 5 kí tự! vui lòng nhập lại");
             }
         } while (true);
+    }
+
+    public void updateData(Scanner scanner) {
+        boolean isExit = true;
+        do {
+            System.out.println("************Câp nhât thông tin************");
+            System.out.println("1. cập nhât mã code");
+            System.out.println("2. cập nhât mã nhân viên tạo");
+            System.out.println("3. cập nhât mã nhân viên duyệt");
+            System.out.println("4. cập nhật trạng thái phiếu");
+            System.out.println("5. thoát");
+            System.out.println("lựa chon của bạn:");
+
+            try {
+                int choice = Integer.parseInt(scanner.nextLine());
+
+                switch (choice) {
+                    case 1:
+                        this.billCode = inputBillCode(scanner);
+                        break;
+                    case 2:
+                        this.employeeIdCreate = inputEmpCreate(scanner);
+                        break;
+                    case 3:
+                        this.employeeIdAuth = inputEmpAuth(scanner);
+                        break;
+                    case 4:
+                        updateDataStatus(scanner);
+                        break;
+                    case 5:
+                        isExit = false;
+                        break;
+                    default:
+                        System.out.println("nhập lựa chọn từ 1-5!");
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("vui lòng nhâp số nguyên!");
+            } catch (Exception ex) {
+                System.err.println(ex.getMessage());
+            }
+        } while (isExit);
+    }
+
+    public void updateDataStatus(Scanner scanner) {
+        boolean isExit = true;
+        do {
+            System.out.println("************Câp nhât trang thái************");
+            System.out.println("1. tạo");
+            System.out.println("2. hủy phiếu");
+            System.out.println("lựa chon của bạn:");
+
+            try {
+                int choice = Integer.parseInt(scanner.nextLine());
+
+                switch (choice) {
+                    case 1:
+                        this.billStatus = 0;
+                        isExit = false;
+                        break;
+                    case 2:
+                        this.billStatus = 1;
+                        isExit = false;
+                        break;
+                    default:
+                        System.out.println("nhập lựa chọn từ 1 trong 2!");
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("vui lòng nhâp số nguyên!");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        } while (isExit);
     }
 }

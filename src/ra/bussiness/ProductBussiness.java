@@ -197,4 +197,27 @@ public class ProductBussiness implements IBussiness<Product, String, String, Int
         }
         return listproduct;
     }
+
+    public static void updateQuantityProduct(String s, Integer Integer) {
+        Connection conn = ConnectionDB.openConnection();
+        CallableStatement callSt = null;
+
+        try {
+            conn.setAutoCommit(false);
+            callSt = conn.prepareCall("{call quantityProduct(?,?)}");
+            callSt.setString(1, s);
+            callSt.setInt(2, Integer);
+            callSt.executeUpdate();
+            conn.commit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            try {
+                conn.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } finally {
+            ConnectionDB.closeConnection(conn);
+        }
+    }
 }

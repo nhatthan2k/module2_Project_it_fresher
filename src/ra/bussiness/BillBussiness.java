@@ -82,13 +82,12 @@ public class BillBussiness implements IBussiness<Bill, Integer, String, Integer>
 
         try {
             conn.setAutoCommit(false);
-            callSt = conn.prepareCall("{call update_bill(?,?,?,?,?,?)}");
+            callSt = conn.prepareCall("{call update_bill(?,?,?,?,?)}");
             callSt.setInt(1, bill.getBillId());
             callSt.setString(2, bill.getBillCode());
             callSt.setString(3, bill.getEmployeeIdCreate());
             callSt.setString(4, bill.getEmployeeIdAuth());
-            callSt.setDate(5, new java.sql.Date(bill.getAuthDate().getTime()));
-            callSt.setInt(6, bill.getBillStatus());
+            callSt.setInt(5, bill.getBillStatus());
             callSt.executeUpdate();
             conn.commit();
             result = true;
@@ -235,5 +234,30 @@ public class BillBussiness implements IBussiness<Bill, Integer, String, Integer>
             ConnectionDB.closeConnection(conn);
         }
         return listBill;
+    }
+
+    public static boolean BrowseBill(Integer integer) {
+        Connection conn = ConnectionDB.openConnection();
+        CallableStatement callSt = null;
+        boolean result = false;
+
+        try {
+            conn.setAutoCommit(false);
+            callSt = conn.prepareCall("{call Browse_bill(?)}");
+            callSt.setInt(1, integer);
+            callSt.executeUpdate();
+            conn.commit();
+            result = true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            try {
+                conn.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } finally {
+            ConnectionDB.closeConnection(conn);
+        }
+        return result;
     }
 }

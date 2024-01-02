@@ -51,10 +51,11 @@ public class BillDetailBussiness implements IBussiness<BillDetail, Integer, Stri
 
         try {
             conn.setAutoCommit(false);
-            callSt = conn.prepareCall("{call add_bill_detail(?,?,?)}");
-            callSt.setString(1, billDetail.getProductID());
-            callSt.setInt(2, billDetail.getQuantity());
-            callSt.setFloat(3, billDetail.getPrice());
+            callSt = conn.prepareCall("{call add_bill_detail(?,?,?,?)}");
+            callSt.setInt(1, billDetail.getBillId());
+            callSt.setString(2, billDetail.getProductID());
+            callSt.setInt(3, billDetail.getQuantity());
+            callSt.setFloat(4, billDetail.getPrice());
             callSt.executeUpdate();
             conn.commit();
             result = true;
