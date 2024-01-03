@@ -86,9 +86,9 @@ public class UserPresentation {
     }
 
     public static void formatPrintBillDetail() {
-        System.out.println("----------------------------------------------------------------------------------------------------------------------------");
-        System.out.println("| Mã phiếu chi tiết | Mã phiếu xuất | Mã sản phẩm | Số lượng xuất | Giá xuất |");
-        System.out.println("----------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("----------------------------------------------------------------------------------");
+        System.out.println("| Mã phiếu chi tiết | Mã phiếu xuất | Mã sản phẩm | Số lượng xuất |   Giá xuất   |");
+        System.out.println("----------------------------------------------------------------------------------");
     }
 
     public static void displayBillInByStatus(Account account) {

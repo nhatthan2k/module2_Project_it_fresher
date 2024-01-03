@@ -74,9 +74,9 @@ public class BillInPresentation {
     }
 
     public static void formatPrintBillDetail() {
-        System.out.println("----------------------------------------------------------------------------------------------------------------------------");
-        System.out.println("| Mã phiếu chi tiết | Mã phiếu xuất | Mã sản phẩm | Số lượng xuất | Giá xuất |");
-        System.out.println("----------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("----------------------------------------------------------------------------------");
+        System.out.println("| Mã phiếu chi tiết | Mã phiếu xuất | Mã sản phẩm | Số lượng xuất |   Giá xuất   |");
+        System.out.println("----------------------------------------------------------------------------------");
     }
 
     public static void displayBillIn(Scanner scanner) {
@@ -288,46 +288,50 @@ public class BillInPresentation {
         Bill bill = (Bill) billBussiness.findById(billId);
 
         if (bill != null && bill.isBillType() == true) {
-            System.out.println("thông tin phiếu bạn muốn duyệt:");
-            formatPrintBill();
-            bill.displayData();
-            System.out.println("thông tin chi tiết phiếu:");
-            List<BillDetail> listBillDetail = BillDetailBussiness.findByBillId(billId);
-            formatPrintBillDetail();
-            listBillDetail.stream().forEach(System.out::println);
+            if (bill.getBillStatus() == 2) {
+                System.err.println("phiếu đã được duyêt!");
+            }else {
+                System.out.println("thông tin phiếu bạn muốn duyệt:");
+                formatPrintBill();
+                bill.displayData();
+                System.out.println("thông tin chi tiết phiếu:");
+                List<BillDetail> listBillDetail = BillDetailBussiness.findByBillId(billId);
+                formatPrintBillDetail();
+                listBillDetail.stream().forEach(System.out::println);
 
-            boolean isExit = true;
-            do {
-                System.out.println("nhấn phim 1 để xác nhận duyệt phiếu, nhấn phím 2 thoát:");
-                System.out.println("lựa chọn của bạn:");
+                boolean isExit = true;
+                do {
+                    System.out.println("nhấn phim 1 để xác nhận duyệt phiếu, nhấn phím 2 thoát:");
+                    System.out.println("lựa chọn của bạn:");
 
-                int choice = Integer.parseInt(scanner.nextLine());
+                    int choice = Integer.parseInt(scanner.nextLine());
 
-                switch (choice) {
-                    case 1:
-                        boolean isAcept = BillBussiness.BrowseBill(billId);
-                        if (isAcept) {
-                            if(listBillDetail.size() > 0) {
-                                for (BillDetail billDetail: listBillDetail) {
-                                    Product product = (Product) productBussiness.findById(billDetail.getProductID());
-                                    int newQuantityProduct = billDetail.getQuantity() + product.getQuantity();
-                                    ProductBussiness.updateQuantityProduct(billDetail.getProductID(), newQuantityProduct);
+                    switch (choice) {
+                        case 1:
+                            boolean isAcept = BillBussiness.BrowseBill(billId);
+                            if (isAcept) {
+                                if(listBillDetail.size() > 0) {
+                                    for (BillDetail billDetail: listBillDetail) {
+                                        Product product = (Product) productBussiness.findById(billDetail.getProductID());
+                                        int newQuantityProduct = billDetail.getQuantity() + product.getQuantity();
+                                        ProductBussiness.updateQuantityProduct(billDetail.getProductID(), newQuantityProduct);
+                                    }
                                 }
+                                System.out.println("duyệt thành công!");
+                            }else {
+                                System.err.println("duyệt thất bại!");
                             }
-                            System.out.println("duyệt thành công!");
-                        }else {
-                            System.err.println("duyệt thất bại!");
-                        }
-                        isExit = false;
-                        break;
-                    case 2:
-                        isExit = false;
-                        break;
-                    default:
-                        System.out.println("vui lòng chọn 1 trong 2!");
-                }
+                            isExit = false;
+                            break;
+                        case 2:
+                            isExit = false;
+                            break;
+                        default:
+                            System.out.println("vui lòng chọn 1 trong 2!");
+                    }
 
-            } while (isExit);
+                } while (isExit);
+            }
 
         } else {
             System.err.println("không tồn tại phiếu nhập!");
