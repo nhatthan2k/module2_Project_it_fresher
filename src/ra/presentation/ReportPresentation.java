@@ -1,12 +1,15 @@
 package ra.presentation;
 
+import ra.bussiness.ReportBussiness;
+
 import java.util.Scanner;
 
 public class ReportPresentation {
     public static void ReportMenu(Scanner scanner) {
         boolean isExit = true;
         do {
-            System.out.println("1. Thống kê chi phí theo ngày, tháng, năm\n" +
+            System.out.println("******************REPORT MANAGEMENT****************\n" +
+                    "1. Thống kê chi phí theo ngày, tháng, năm\n" +
                     "2. Thống kê chi phí theo khoảng thời gian\n" +
                     "3. Thống kê doanh thu theo ngày, tháng, năm\n" +
                     "4. Thống kê doanh thu theo khoảng thời gian\n" +
@@ -23,22 +26,31 @@ public class ReportPresentation {
 
                 switch (choice) {
                     case 1:
+                        ReportBussiness.costReceiptByDay(scanner);
                         break;
                     case 2:
+                        ReportBussiness.costReceiptFromDayToDay(scanner);
                         break;
                     case 3:
+                        ReportBussiness.turnoverBillByDay(scanner);
                         break;
                     case 4:
+                        ReportBussiness.turnoverBillFromDayToDay(scanner);
                         break;
                     case 5:
+                        ReportBussiness.quantityEmpByStatus(scanner);
                         break;
                     case 6:
+                        ReportBussiness.statisticMaxReceiptFromDayToDay(scanner);
                         break;
                     case 7:
+                        ReportBussiness.statisticMinReceiptFromDayToDay(scanner);
                         break;
                     case 8:
+                        ReportBussiness.statisticMaxBillFromDayToDay(scanner);
                         break;
                     case 9:
+                        ReportBussiness.statisticMinBillFromDayToDay(scanner);
                         break;
                     case 10:
                         isExit = false;

@@ -203,7 +203,7 @@ public class Employee {
         System.out.printf("| %12s | %13s | %10s | %17s | %13s | %11s | %20s |\n",
                 this.employeeId, this.employeeName, this.birthOfDate, this.email,
                 this.phone, this.address, this.employeeStatus == 0 ? "Hoạt động" : (this.employeeStatus == 1 ? "Nghỉ chế độ" : "Nghỉ việc"));
-        System.out.println("----------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("----------------------------------------------------------------------------------------------------------------------");
     }
 
     @Override

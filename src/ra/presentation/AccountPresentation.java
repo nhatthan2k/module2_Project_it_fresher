@@ -134,7 +134,7 @@ public class AccountPresentation {
     public static void searchAccount(Scanner scanner) {
         boolean isExit = true;
         do {
-            System.out.println("************Phương thức tìm kiếm nhân viên************");
+            System.out.println("************Phương thức tìm kiếm tài khoản************");
             System.out.println("1. Tìm kiếm nhân viên theo userName");
             System.out.println("2. Tìm kiếm nhân viên theo tên nhân viên");
             System.out.println("3. thoát");
